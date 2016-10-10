@@ -1,22 +1,18 @@
-
-Application created by [ThinkJS](http://www.thinkjs.org)
-
-## Install dependencies
+### 开发
 
 ```
-npm install
+$ git clone https://github.com/xwlyy/thinkjs-blog.git
+$ cd thinkjs-blog
+$ npm install
+$ npm start
 ```
+在浏览中打开http://localhost:8360
 
-## Start server
+### 前端项目地址
+https://github.com/xwlyy/vue-blog
 
-```
-npm start
-```
+### express版后端项目地址
+https://github.com/xwlyy/express-blog
 
-## Deploy with pm2
-
-Use pm2 to deploy app on production enviroment.
-
-```
-pm2 startOrReload pm2.json
-```
+### 免费部署上线
+[heroku](https://www.heroku.com/)+[mlab](https://mlab.com/)
