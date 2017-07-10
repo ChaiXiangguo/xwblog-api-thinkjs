@@ -1,5 +1,0 @@
-/**
- * route
- */
-export default [
-];

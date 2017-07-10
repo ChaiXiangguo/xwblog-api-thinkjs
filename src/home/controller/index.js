@@ -1,8 +1,6 @@
 'use strict';
 
-import Base from './base.js';
-
-export default class extends Base {
+export default class extends think.controller.rest {
   /**
    * index action
    * @return {Promise} []
@@ -10,5 +8,12 @@ export default class extends Base {
   indexAction(){
     //auto render template file index_index.html
     return this.display();
+  }
+
+  async blogAction() {
+
+    let blogs = await this.model('old_blog', 'mongo').select()
+    console.debug(blogs)
+    this.success(blogs)
   }
 }
