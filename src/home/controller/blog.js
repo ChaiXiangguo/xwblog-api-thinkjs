@@ -3,7 +3,7 @@
 import Base from './base.js';
 import { getPage } from './page.js';
 import mongoose from "mongoose"
-mongoose.connect('mongodb://localhost/vueblog')
+mongoose.connect('mongodb://xwlyy:123456@ds017246.mlab.com:17246/awesome')
 export default class extends Base {
   async getAction(){
     if (this.get('_id')) {
@@ -24,7 +24,7 @@ export default class extends Base {
       return this.json({'blogs' : blogs, 'page': page})
     }
   }
-  async postAction(){ 
+  async postAction(){
     this.checkLogin();
     if (this.post('_id') === 'new') {
       let data = {
@@ -32,13 +32,13 @@ export default class extends Base {
         content: this.post('content'),
         user: this.user._id,
         create_time: Date.parse(new Date()),
-        update_time: Date.parse(new Date())    
+        update_time: Date.parse(new Date())
       }
       let insertId = await this.modelInstance.addBlog(data);
       return this.json({'blog_id': insertId});
     } else {
       let data = {
-        title: this.post('title'), 
+        title: this.post('title'),
         content: this.post('content'),
         update_time: Date.parse(new Date())
       }
