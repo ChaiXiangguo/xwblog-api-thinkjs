@@ -14,7 +14,7 @@ export default class extends think.controller.base {
    * article action
    * 迁移文章
    */
-  async articleAction() {
+  async article() {
 
     think.log('move article from mongo to mysql start');
 
@@ -41,7 +41,7 @@ export default class extends think.controller.base {
    * comment action
    * 迁移文章
    */
-  async commentAction() {
+  async comment() {
 
     think.log('move comment from mongo to mysql start');
 
@@ -67,7 +67,7 @@ export default class extends think.controller.base {
    * user action
    * 迁移用户
    */
-  async userAction() {
+  async user() {
 
     think.log('move user from mongo to mysql start');
 
@@ -94,11 +94,11 @@ export default class extends think.controller.base {
    * id action
    * 迁移id
    */
-  async idAction() {
+  async relation() {
 
     think.log('move id start');
 
-    let articles = await this.model('article').alias("article").join({
+    let articles = await this.model('article').setRelation(false).alias("article").join({
       table: "user",
       join: "inner",
       as: "user",
@@ -126,7 +126,7 @@ export default class extends think.controller.base {
       'article.id as articleId'
     ]).select()
 
-    await this.model('comment').updateMany(comments, null, true).catch(console.error);
+    await this.model('comment').updateMany(comments).catch(console.error);
 
     think.log('move id end');
 
@@ -134,10 +134,10 @@ export default class extends think.controller.base {
   }
 
   async migrateAction() {
-    await this.articleAction()
-    await this.userAction()
-    await this.commentAction()
-    await this.idAction()
+    await this.article()
+    await this.user()
+    await this.comment()
+    await this.relation()
 
     this.success('migrate success')
   }

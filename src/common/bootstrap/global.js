@@ -1,12 +1,24 @@
-/**
- * this file will be loaded before server started
- * you can define global functions used in controllers, models, templates
- */
+'use strict'
+
+import lodash from 'lodash';
+import crypto from 'crypto';
+import utility from 'utility';
+
+global._ = lodash;
 
 /**
- * use global.xxx to define global functions
- * 
- * global.fn1 = function(){
- *     
- * }
+ * 验证时否是调试用户
  */
+global.isDebug = (agent = '') => {
+  let flag = false;
+  agent = agent.toLowerCase();
+  let key = ["debug"];
+  for (let item of key) {
+    if (agent.indexOf(item) > -1) {
+      flag = true;
+      break;
+    }
+  }
+
+  return flag;
+};
