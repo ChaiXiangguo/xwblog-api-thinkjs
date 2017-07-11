@@ -2,7 +2,7 @@
 
 import lodash from 'lodash';
 import crypto from 'crypto';
-import utility from 'utility';
+// import utility from 'utility';
 
 global._ = lodash;
 
@@ -21,4 +21,12 @@ global.isDebug = (agent = '') => {
   }
 
   return flag;
+};
+
+global.encryptPasswordMd5 = function (password, salt) {
+  return think.md5(password + salt.trim());
+};
+
+global.createSalt = function () {
+  return crypto.randomBytes(30).toString('hex');
 };
