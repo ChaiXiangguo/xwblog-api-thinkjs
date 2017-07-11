@@ -10,7 +10,7 @@ export default class extends think.model.relation {
    */
   init(...args){
     super.init(...args);
-    this.tableName = 'blog';
+    this.tableName = 'article';
     this.relation = {}
   }
 }

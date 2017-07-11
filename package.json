@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "babel-runtime": "6.x.x",
+    "log4js": "^1.1.0",
     "mongodb": "^2.0.48",
     "source-map-support": "0.4.0",
     "thinkjs": "2.2.x"
