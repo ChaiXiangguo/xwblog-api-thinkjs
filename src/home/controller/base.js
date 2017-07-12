@@ -20,7 +20,7 @@ export default class extends think.controller.base {
       await this.session('user', user);
     }
 
-    if (true || isDev()) {
+    if (isDev()) {
       if (this.isGet() || !think.isEmpty(this.get())) {
         console.debug("get/del参数：", this.get())
       }
@@ -32,7 +32,7 @@ export default class extends think.controller.base {
   }
 
   async unlogin() {
-    if (this.http.controller === 'user' && this.http.action === 'signin') return;
+    if (this.http.controller === 'user' && (this.http.action === 'signin' || this.http.action === 'signup' )) return;
     let user = await this.session('user');
     if (think.isEmpty(user)) {
       return this.status(401).fail('请重新登录');

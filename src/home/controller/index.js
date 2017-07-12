@@ -7,7 +7,7 @@ export default class extends think.controller.base {
    */
   indexAction(){
     //auto render template file index_index.html
-    return this.display();
+    // return this.display();
   }
 
   /**

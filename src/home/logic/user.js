@@ -6,14 +6,31 @@
  */
 import Base from './base.js';
 export default class extends Base {
-  /**
-   * index action logic
-   * @return {} []
-   */
-  postAction(){
+
+  signinAction(){
     this.rules = {
-      username: "required",
+      account: "required",
       password: "required"
+    }
+  }
+
+  signupAction(){
+    this.rules = {
+      account: "required",
+      password: "required"
+    }
+  }
+
+  modifyAction(){
+    this.rules = {
+      nickname: "requiredWithoutAll:headimgurl"
+    }
+  }
+
+  passwordAction(){
+    this.rules = {
+      password: "required",
+      newPassword: "required"
     }
   }
 }
