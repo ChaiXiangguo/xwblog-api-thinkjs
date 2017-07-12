@@ -44,7 +44,7 @@ export default class extends think.model.relation {
     }
   }
 
-  getUser(condition) {
+  getDetail(condition) {
     return this.where(condition).find()
   }
 }

@@ -20,7 +20,7 @@ export default class extends Base {
   async signinAction(){
     let data = _.pick(this.post(), 'account', 'password')
 
-    let user = await this.model('user').setRelation(false).getUser({account: data.account})
+    let user = await this.model('user').setRelation(false).getDetail({account: data.account})
 
     if (think.isEmpty(user)) {
       return this.status(400).fail('用户不存在')
@@ -46,7 +46,7 @@ export default class extends Base {
   async signupAction(){
     let data = _.pick(this.post(), 'account', 'nickname', 'password')
 
-    let user = await this.model('user').setRelation(false).getUser({account: data.account})
+    let user = await this.model('user').setRelation(false).getDetail({account: data.account})
 
     if (!think.isEmpty(user)) {
       return this.status(400).fail(`账户名为${data.account}的用户已存在`)
@@ -63,7 +63,7 @@ export default class extends Base {
 
     let userId = await this.model('user').add(user)
 
-    user = await this.model('user').setRelation(false).getUser({id: userId})
+    user = await this.model('user').setRelation(false).getDetail({id: userId})
 
     await this.session('user', user)
 
@@ -90,7 +90,7 @@ export default class extends Base {
 
     await this.model('user').where({id: user.id}).update(data)
 
-    user = await this.model('user').setRelation(false).getUser({id: user.id})
+    user = await this.model('user').setRelation(false).getDetail({id: user.id})
 
     await this.session('user', user)
 
@@ -120,7 +120,7 @@ export default class extends Base {
 
     await this.model('user').where({id: user.id}).update(data)
 
-    user = await this.model('user').setRelation(false).getUser({id: user.id})
+    user = await this.model('user').setRelation(false).getDetail({id: user.id})
 
     await this.session('user', user)
 

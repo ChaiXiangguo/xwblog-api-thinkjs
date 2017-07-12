@@ -1,32 +1,62 @@
 'use strict';
 
 import Base from './base.js';
-import { getPage } from './page.js';
 
 export default class extends Base {
-  async getAction(){
-    let count = await this.modelInstance.count({blog_id:this.get('_id')})
-    let page = getPage(count, this.get('page'), this.get('size'));
-    let comments = await this.modelInstance.findComments({blog_id:this.get('_id')}, page)
-    return this.json({'comments' : comments, 'page': page});
+
+  /**
+   * add action
+   * 添加评论
+   */
+  async addAction(){
+    let data = _.pick(this.post(), 'articleId', 'content')
+
+    let user = await this.session('user')
+    data.userId = user.id
+
+    await this.model('comment').add(data)
+
+    return this.success(isDev() && data, '评论添加成功')
   }
-  async postAction(){
-    this.checkLogin();
-    let comment = {
-      blog_id: this.post('_id'),
-      content: this.post('content'),
-      user: this.user._id,
-      create_time: Date.parse(new Date())
+
+  /**
+   * modify action
+   * 修改评论
+   */
+  async modifyAction(){
+    let data = _.pick(this.post(), 'id', 'content')
+
+    let user = await this.session('user')
+
+    let comment = await this.model('comment').getDetail({id: data.id})
+
+    if (comment.userId !== user.id) {
+      return this.status(400).fail('禁止修改别人的评论')
     }
-    let insertId = await this.modelInstance.addComment(comment);
-    //comment = await this.modelInstance.where({_id: insertId}).find();
-    comment._id = insertId
-    let user = {
-      username: this.user.username,
-      nickname: this.user.nickname,
-      image: this.user.image
-    }
-    comment.user = user
-    return this.json({'comment' : [comment]});
+
+    await this.model('comment').update(data)
+
+    return this.success(isDev() && data, '评论修改成功')
   }
+
+  /**
+   * delete action
+   * 删除评论
+   */
+  async deleteAction(){
+    let data = _.pick(this.get(), 'id')
+
+    let user = await this.session('user')
+
+    let comment = await this.model('comment').getDetail({id: data.id})
+
+    if (comment.userId !== user.id) {
+      return this.status(400).fail('禁止删除别人的评论')
+    }
+
+    await this.model('comment').where({id: data.id}).update({status: -1})
+
+    return this.success(isDev() && data, '评论删除成功')
+  }
+
 }

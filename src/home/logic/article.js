@@ -7,9 +7,15 @@
 import Base from './base.js';
 export default class extends Base {
 
+  detailAction(){
+    this.rules = {
+      id: "required"
+    }
+  }
+
   addAction(){
     this.rules = {
-      articleId: "required",
+      title: "required",
       content: "required"
     }
   }
@@ -17,7 +23,7 @@ export default class extends Base {
   modifyAction(){
     this.rules = {
       id: "required",
-      content: "required"
+      title: "requiredWithoutAll:content"
     }
   }
 
