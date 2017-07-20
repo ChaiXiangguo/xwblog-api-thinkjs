@@ -34,7 +34,8 @@ export default class extends think.controller.base {
   async unlogin() {
     if (this.http.controller === 'user' && (this.http.action === 'signin' || this.http.action === 'signup' )) return;
     let user = await this.session('user');
-    if (think.isEmpty(user)) {
+
+    if (think.isEmpty(user) && this.http.method !== 'GET') {
       return this.status(401).fail('请重新登录');
     }
   }

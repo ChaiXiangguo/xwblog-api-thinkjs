@@ -36,7 +36,7 @@ export default class extends Base {
 
     await this.session('user', user)
 
-    return this.success('/home/index', "登录成功")
+    return this.success(_.omit(user, 'password'))
   }
 
   /**
@@ -67,7 +67,7 @@ export default class extends Base {
 
     await this.session('user', user)
 
-    return this.success('/home/index', "注册成功")
+    return this.success(_.omit(user, 'password'))
   }
 
   /**

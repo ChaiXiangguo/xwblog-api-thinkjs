@@ -33,9 +33,10 @@ export default class extends Base {
     let user = await this.session('user')
     data.userId = user.id
 
-    await this.model('comment').add(data)
+    let commentId = await this.model('comment').add(data)
+    data = await this.model('comment').getDetail({id: commentId})
 
-    return this.success(isDev() && data, '评论添加成功')
+    return this.success(data)
   }
 
   /**

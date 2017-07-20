@@ -47,7 +47,7 @@ export default class extends Base {
 
     let articleId = await this.model('article').add(data)
 
-    return this.success(isDev() && data, {articleId})
+    return this.success({articleId})
   }
 
   /**
