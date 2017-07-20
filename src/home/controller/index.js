@@ -1,5 +1,7 @@
 'use strict';
 
+// import Promise from "bluebird"
+
 export default class extends think.controller.base {
   /**
    * index action
@@ -70,7 +72,17 @@ export default class extends think.controller.base {
 
     think.log('move user from mongo to mysql start');
 
-    let users = await this.model('old_user', 'mongo').select().map(user => ({
+    let users = await this.model('old_user', 'mongo').select()
+
+    for (let i = 0; i < users.length; i++) {
+      for (let j = i+1; j < users.length; j++) {
+        if (users[i].username === users[j].username) {
+          users[j].username = users[j].username + '_' + users[j].create_time
+        }
+      }
+    }
+
+    users = users.map(user => ({
       mongoId: String(user._id),
       account: user.username,
       nickname: user.nickname,
@@ -104,7 +116,8 @@ export default class extends think.controller.base {
       on: ["article.userMongoId", "user.mongoId"]
     }).field([
       'article.id',
-      'user.id as userId'
+      'user.id as userId',
+      'article.updateTime'
     ]).select()
 
     await this.model('article').updateMany(articles, null, true).catch(console.error);
@@ -122,7 +135,8 @@ export default class extends think.controller.base {
     }).field([
       'comment.id',
       'user.id as userId',
-      'article.id as articleId'
+      'article.id as articleId',
+      'comment.updateTime'
     ]).select()
 
     await this.model('comment').updateMany(comments).catch(console.error);
