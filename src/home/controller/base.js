@@ -16,7 +16,7 @@ export default class extends think.controller.base {
 
     if (isDebug(this.userAgent())) {
       //指定用户身份
-      let user = await this.model('user').setRelation(false).getUser({id: this.get('userId') || this.config('debug').userId});
+      let user = await this.model('user').setRelation(false).getDetail({id: this.get('userId') || this.config('debug').userId});
       await this.session('user', user);
     }
 

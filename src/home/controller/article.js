@@ -11,6 +11,7 @@ export default class extends Base {
 
     let id = this.get('id')
     let result = await this.model('article').getDetail({id})
+    result.createTime = new Date(result.createTime).getTime()
     return this.success(result)
   }
 
@@ -24,7 +25,11 @@ export default class extends Base {
     let currentPage = this.get('currentPage') || 1;
     let numsPerPage = this.get('numsPerPage') || 10;
 
-    let result = await this.model('article').setRelation(false).getList(data, currentPage, numsPerPage)
+    let result = await this.model('article').setRelation('user').getList(data, currentPage, numsPerPage)
+
+    result.data.map(item => {
+      item.createTime = new Date(item.createTime).getTime()
+    })
 
     return this.success(result)
   }
@@ -40,9 +45,9 @@ export default class extends Base {
     data.userId = user.id
     data.digest = data.content.length <= 40?data.content:data.content.substr(0, 40)+'...'
 
-    await this.model('article').add(data)
+    let articleId = await this.model('article').add(data)
 
-    return this.success(isDev() && data, '文章添加成功')
+    return this.success(isDev() && data, {articleId})
   }
 
   /**

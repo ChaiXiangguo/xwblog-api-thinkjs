@@ -1,8 +1,7 @@
 {
   "apps": [{
-    "name": "thinkjs-blog",
+    "name": "xwblog-api-thinkjs",
     "script": "www/production.js",
-    "cwd": "/home/djq/develop/thinkjs-blog",
     "exec_mode": "cluster",
     "instances": 0,
     "max_memory_restart": "1G",
@@ -10,7 +9,7 @@
     "node_args": [],
     "args": [],
     "env": {
-      
+
     }
   }]
 }

@@ -5,6 +5,25 @@ import Base from './base.js';
 export default class extends Base {
 
   /**
+   * list action
+   * 获取评论列表
+   */
+  async listAction(){
+    let data = _.pick(this.get(), 'articleId')
+
+    let currentPage = this.get('currentPage') || 1;
+    let numsPerPage = this.get('numsPerPage') || 10;
+
+    let result = await this.model('comment').setRelation('user').getList(data, currentPage, numsPerPage)
+
+    result.data.map(item => {
+      item.createTime = new Date(item.createTime).getTime()
+    })
+
+    return this.success(result)
+  }
+
+  /**
    * add action
    * 添加评论
    */
