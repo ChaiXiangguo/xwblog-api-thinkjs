@@ -146,12 +146,12 @@ export default class extends think.controller.base {
     // this.success('id move success')
   }
 
-  async migrateAction() {
-    await this.article()
-    await this.user()
-    await this.comment()
-    await this.relation()
-
-    this.success('migrate success')
-  }
+  // async migrateAction() {
+  //   await this.article()
+  //   await this.user()
+  //   await this.comment()
+  //   await this.relation()
+  //
+  //   this.success('migrate success')
+  // }
 }
