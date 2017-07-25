@@ -14,11 +14,11 @@ export default class extends think.controller.base {
 
   async debug() {
 
-    if (isDebug(this.userAgent())) {
+    // if (isDebug(this.userAgent())) {
       //指定用户身份
-      let user = await this.model('user').setRelation(false).getDetail({id: this.get('userId') || this.config('debug').userId});
-      await this.session('user', user);
-    }
+      // let user = await this.model('user').setRelation(false).getDetail({id: this.get('userId') || this.config('debug').userId});
+      // await this.session('user', user);
+    // }
 
     if (isDev()) {
       if (this.isGet() || !think.isEmpty(this.get())) {
