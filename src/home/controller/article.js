@@ -10,7 +10,7 @@ export default class extends Base {
   async detailAction(){
 
     let id = this.get('id')
-    let result = await this.model('article').getDetail({id})
+    let result = await this.model('article').setRelation('user').getDetail({id})
     result.createTime = new Date(result.createTime).getTime()
     return this.success(result)
   }
