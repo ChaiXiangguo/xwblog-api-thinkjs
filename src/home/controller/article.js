@@ -1,6 +1,7 @@
 'use strict';
 
 import Base from './base.js';
+import xss from 'xss'
 
 export default class extends Base {
   /**
@@ -40,6 +41,7 @@ export default class extends Base {
    */
   async addAction(){
     let data = _.pick(this.post(), 'title', 'content')
+    data.content = xss(data.content)
 
     let user = await this.session('user')
     data.userId = user.id
@@ -56,6 +58,7 @@ export default class extends Base {
    */
   async modifyAction(){
     let data = _.pick(this.post(), 'id', 'title', 'content')
+    data.content = xss(data.content)
 
     let user = await this.session('user')
 
